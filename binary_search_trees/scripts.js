@@ -104,6 +104,18 @@ class Tree {
             return root;
         }
     }
+
+    find(root, data) {
+        if (root == null || root.data == data) {
+            return root; 
+        }
+
+        if (root.data < data) {
+            return this.find(root.right, data); 
+        }
+
+        return this.find(root.left, data); 
+    }
 }
 
 function mergeSort(array) {
@@ -159,5 +171,6 @@ console.log(tree);
 prettyPrint(tree.root); 
 tree.insert(tree.root, 35); 
 tree.delete(tree.root, 67); 
+console.log(tree.find(tree.root, 1)); 
 prettyPrint(tree.root); 
 
