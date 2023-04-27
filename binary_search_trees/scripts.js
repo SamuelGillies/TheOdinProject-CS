@@ -7,8 +7,8 @@ class Node {
 }
 
 class Tree {
-    constructor() {
-        this.root = null; 
+    constructor(array) {
+        this.root = this.sortEdit(array); 
     }
 
     sortEdit(array) {
@@ -32,6 +32,35 @@ class Tree {
         node.right = this.buildTree(array.slice(mid + 1)); 
 
         return node; 
+    }
+
+    insert(root, data) {
+        let newNode = new Node(data);
+        
+        if (!root) {
+            root = newNode;
+            return;
+        }
+
+        let prev = null;
+        let temp = root;
+
+        while (temp) {
+            if (temp.data > data) {
+                prev = temp;
+                temp = temp.left;
+            }
+            else if (temp.data < data) {
+                prev = temp;
+                temp = temp.right;
+            }
+        }
+
+        if (prev.data > data)
+            prev.left = newNode;
+        else
+            prev.right = newNode;
+
     }
 }
 
@@ -82,7 +111,10 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
   }
 
-let tree = new Tree; 
+let tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]); 
 
-console.log(tree.sortEdit([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])); 
-prettyPrint(tree.sortEdit([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])); 
+console.log(tree); 
+prettyPrint(tree.root); 
+tree.insert(tree.root, 35); 
+prettyPrint(tree.root); 
+
