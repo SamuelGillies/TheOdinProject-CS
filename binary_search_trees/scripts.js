@@ -62,6 +62,48 @@ class Tree {
             prev.right = newNode;
 
     }
+
+    delete(root, data) {
+ 
+        if (root == null)
+            return root;
+ 
+        if (root.data > data) {
+            root.left = this.delete(root.left, data);
+            return root;
+        } else if (root.data < data) {
+            root.right = this.delete(root.right, data);
+            return root;
+        }
+ 
+        if (root.left == null) {
+            let temp = root.right;
+            return temp;
+        } else if (root.right == null) {
+            let temp = root.left;
+            return temp;
+        }
+ 
+        else {                                  // If both children exist
+            let succParent = root;
+            let succ = root.right;
+ 
+            while (succ.left != null) {
+                succParent = succ;
+                succ = succ.left;
+            }
+ 
+            if (succParent != root) {
+                succParent.left = succ.right;
+            } else {
+                succParent.right = succ.right;
+            }
+ 
+            root.data = succ.data;
+ 
+            return root;
+        }
+    }
 }
 
 function mergeSort(array) {
@@ -116,5 +158,6 @@ let tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(tree); 
 prettyPrint(tree.root); 
 tree.insert(tree.root, 35); 
+tree.delete(tree.root, 67); 
 prettyPrint(tree.root); 
 
